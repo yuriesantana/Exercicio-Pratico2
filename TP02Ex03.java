@@ -26,53 +26,68 @@ Dupla:
 import java.util.Scanner;
 
 public class TP02Ex03 {
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int quantidade;
-
+        String resposta;
         do {
-            System.out.print("Digite a quantidade de valores (1 a 19): ");
-            quantidade = scanner.nextInt();
-            if (quantidade <= 0 || quantidade >= 20) {
-                System.out.println("Quantidade inválida. Por favor, digite um valor entre 1 e 19.");
+
+            do {
+                System.out.print("Digite a quantidade de valores (1 a 19): ");
+                quantidade = scanner.nextInt();
+                if (quantidade <= 0 || quantidade >= 20) {
+                    System.out.println("Quantidade inválida. Por favor, digite um valor entre 1 e 19.");
+                }
+            } while (quantidade <= 0 || quantidade >= 20);
+
+            int[] valores = new int[quantidade];
+            int soma = 0;
+            int maiorValor = Integer.MIN_VALUE;
+            int menorValor = Integer.MAX_VALUE;
+            int positivos = 0;
+            int negativos = 0;
+
+            for (int i = 0; i < valores.length; i++) {
+                System.out.print("Digite o valor " + (i + 1) + ": ");
+                valores[i] = scanner.nextInt();
+                soma += valores[i];
+                if (valores[i] > maiorValor) {
+                    maiorValor = valores[i];
+                }
+                if (valores[i] < menorValor) {
+                    menorValor = valores[i];
+                }
+                if (valores[i] > 0) {
+                    positivos++;
+                } else if (valores[i] < 0) {
+                    negativos++;
+                }
             }
-        } while (quantidade <= 0 || quantidade >= 20);
 
-        int[] valores = new int[quantidade];
-        int soma = 0;
-        int maiorValor = Integer.MIN_VALUE;
-        int menorValor = Integer.MAX_VALUE;
-        int positivos = 0;
-        int negativos = 0;
+            double media = (double) soma / valores.length;
+            double porcentagemPositivos = (double) positivos / valores.length * 100;
+            double porcentagemNegativos = (double) negativos / valores.length * 100;
 
-        for (int i = 0; i < valores.length; i++) {
-            System.out.print("Digite o valor " + (i + 1) + ": ");
-            valores[i] = scanner.nextInt();
-            soma += valores[i];
-            if (valores[i] > maiorValor) {
-                maiorValor = valores[i];
-            }
-            if (valores[i] < menorValor) {
-                menorValor = valores[i];
-            }
-            if (valores[i] > 0) {
-                positivos++;
-            } else if (valores[i] < 0) {
-                negativos++;
-            }
-        }
+            System.out.println("O maior valor é: " + maiorValor);
+            System.out.println("O menor valor é: " + menorValor);
+            System.out.println("A soma dos valores é: " + soma);
+            System.out.println("A média aritmética dos valores é: " + media);
+            System.out.println("Porcentagem de valores positivos: " + porcentagemPositivos + "%");
+            System.out.println("Porcentagem de valores negativos: " + porcentagemNegativos + "%");
 
-        double media = (double) soma / valores.length;
-        double porcentagemPositivos = (double) positivos / valores.length * 100;
-        double porcentagemNegativos = (double) negativos / valores.length * 100;
+            do {
+                System.out.print("Deseja realizar uma nova execução? (S/N): ");
+                resposta = scanner.next().toUpperCase();
 
-        System.out.println("O maior valor é: " + maiorValor);
-        System.out.println("O menor valor é: " + menorValor);
-        System.out.println("A soma dos valores é: " + soma);
-        System.out.println("A média aritmética dos valores é: " + media);
-        System.out.println("Porcentagem de valores positivos: " + porcentagemPositivos + "%");
-        System.out.println("Porcentagem de valores negativos: " + porcentagemNegativos + "%");
+                if (!resposta.equals("S") && !resposta.equals("N")) {
+                    System.out.println("Resposta inválida. Digite 'S' ou 'N'.");
+                }
 
-} 
+            } while (!resposta.equals("S") && !resposta.equals("N"));
+
+        } while (resposta.equals("S"));
+
+    }
 
 }
